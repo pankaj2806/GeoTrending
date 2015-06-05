@@ -4,7 +4,7 @@ package GeoTrending
  * Created by senthil.b on 05/06/15.
  */
 
-class NearByLocationService {
+object NearByLocationService {
 
   def findNearbyLocation(pincode: Int): List[Int] = {
     val start: Int = pincode - (pincode % 100)

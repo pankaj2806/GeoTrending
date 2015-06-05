@@ -1,0 +1,74 @@
+<html>
+<head></head>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+<style>
+  #map { height: 600px; }
+</style>
+
+<body>
+<div id="map"></div>
+
+<script>
+
+  var xmlhttp = new XMLHttpRequest();
+  var url = "http://maps.googleapis.com/maps/api/geocode/json?address=127021&region=india";
+
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      var myArr = JSON.parse(xmlhttp.responseText);
+      myFunction(myArr);
+    }
+  }
+
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+
+  function myFunction(data) {
+
+    var map = L.map('map', {center: [23.25, 77.04], zoom: 5});
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var marker = L.marker([23.25, 77.09]).addTo(map);
+    var circle = L.circle([23.508, 77.11], 500, {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.5
+    }).addTo(map);
+
+    var polygon = L.polygon([
+      [23.509, 77.08],
+      [23.503, 77.06],
+      [23.51, 77.047]
+    ]).addTo(map);
+
+    if (data) {
+      geoJson = {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [102.0, 0.5]
+              ]
+            },
+            "properties": {"prop0": "value0"}
+          },
+        ]
+     };
+
+     var geoJson = L.geoJson(data).addTo(map);
+    }
+  }
+
+</script>
+
+</body>
+
+</html>
+

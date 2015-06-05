@@ -13,10 +13,10 @@ class NearByLocationService {
   }
 
 
-  def findNearbyLocations(pincodes:List[Int]):Map[String,List[Int]]= {
-    var locationMap: Map[String, List[Int]] = Map()
+  def findNearbyLocations(pincodes:List[Int]):collection.mutable.Map[Int,List[Int]]= {
+    var locationMap: collection.mutable.Map[Int, List[Int]] = collection.mutable.Map()
     for(pincode<-pincodes){
-      locationMap += pincode.toString -> findNearbyLocation(pincode)
+      locationMap += pincode -> findNearbyLocation(pincode)
     }
     locationMap
   }
